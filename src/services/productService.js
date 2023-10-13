@@ -1,5 +1,4 @@
-import ApiUtil from "@/utils/ApiUtils";
-
+import { ApiUtil } from "@/utils/ApiUtils";
 // Get all products
 export async function getAllProducts() {
 	try {
