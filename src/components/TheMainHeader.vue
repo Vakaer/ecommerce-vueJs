@@ -8,9 +8,8 @@
       class="flex flex-wrap items-center justify-between px-3 w-width-60 mx-auto"
     >
       <div>
-        <a class="text-f28 font-bold text-black "
-          >Gadget Store</a
-        >
+        <router-link to="/" class="text-f28 text-primary font-bold  "
+          >FASHIONISTA</router-link>
       </div>
       <!-- Hamburger button for mobile view -->
       <button
