@@ -1,12 +1,8 @@
 <template>
     <HomeLayout>
         <div class="w-width-60 mx-auto">
-            <h1 class="text-2xl text-center py-10">HomeView</h1>
-            <div class="flex flex-wrap gap-3">
-                <div v-for="product in productStore.products" :key="product.id" class="w-width-24">
-                    <ProductListItem :product="product" />
-                </div>
-            </div>
+            <h1 class="text-center text-f44 mt-10 font-bold">Fashion Categories</h1>
+            <TabbedCategories/>
         </div>
     </HomeLayout>
 </template>
@@ -15,30 +11,28 @@
 import { useProductStore } from '@/store/ProductStore';
 import ProductListItem from '@/components/product/ProductListItem.vue';
 import HomeLayout from '@/Layouts/HomeLayout.vue';
-
+import TabbedCategories from '@/components/TabbedCategories.vue';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 
 export default {
     name: "HomeView",
     components: {
         ProductListItem,
-        HomeLayout
+        HomeLayout,
+        TabbedCategories
     },
     setup() {
         const productStore = useProductStore();
-        return { productStore }
-    },
-    data() {
-        return {
-            products: []
-        }
+        return {  productStore }
     },
     methods: {
         async getAllProduct() {
-            this.productStore.getProducts()
+            await this.productStore.getProducts();
         }
     },
     created() {
-        this.getAllProduct()
+        this.productStore.getProducts()
     }
 
 }

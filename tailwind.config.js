@@ -4,6 +4,7 @@ module.exports = {
 	theme: {
 		extend: {
 			width: {
+				"width-22":"22%",
 				"width-24":"24%",
 				"width-60": "60%",
 				"width-24":"24%",
@@ -16,6 +17,7 @@ module.exports = {
 				f14: "14px",
 				f16: "16px",
 				f28: "28px",
+				f44: "44px",
 			},
 			colors: {
 				primary: "#7fad39",

@@ -33,7 +33,6 @@ export default {
   },
   methods: {
     async login() {
-      debugger;
       await this.authStore.login(this.username, this.password);
       this.$router.push({ path: '/' });
     },
