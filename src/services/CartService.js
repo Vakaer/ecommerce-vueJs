@@ -1,4 +1,4 @@
-import ApiUtil from "@/utils/ApiUtils";
+import { ApiUtil } from "@/utils/ApiUtils";
 
 // Get all cart items
 export async function getAllCartItems() {
@@ -65,14 +65,13 @@ export async function getCartItemByUserId(id) {
 	}
 }
 
-
 // Add  product in cart
-export async function addCartItem(data) {
+export async function addProductToCart(data) {
 	try {
 		const res = await ApiUtil.SendAsync({
 			url: "carts",
 			method: "POST",
-			body: { ...data },
+			body: data,
 		});
 		return res.data;
 	} catch (error) {
@@ -80,7 +79,7 @@ export async function addCartItem(data) {
 	}
 }
 // update product in cart
-export async function updateCartItem(id,data) {
+export async function updateCartItem(id, data) {
 	try {
 		const res = await ApiUtil.SendAsync({
 			url: `carts/${id}`,
@@ -93,9 +92,8 @@ export async function updateCartItem(id,data) {
 	}
 }
 
-
 // delete cart item
-export async function getCartItemById(id) {
+export async function deleteCartItem(id) {
 	try {
 		const res = await ApiUtil.SendAsync({
 			url: `carts/${id}`,
