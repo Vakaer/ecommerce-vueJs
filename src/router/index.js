@@ -1,37 +1,40 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/home/home.vue";
-import NotFound from "@/views/error/NotFound.vue";
-import AuthLayoutVue from "@/Layouts/AuthLayout.vue";
-import LoginVue from "@/views/auth/Login.vue";
+
+import { HOME, BLOGS, CONTACT_US, LOGIN, SHOPPING_CART, NOT_FOUND } from "./routePaths";
+import { BlogsView, ContactUsView, HomeView, LoginVue, NotFound, ShoppingCartView } from "./routeComponents";
 
 const routes = [
 	{
-		path: "/",
+		path: HOME,
 		component: HomeView,
 	},
 	{
-		path: "/blogs",
+		path: BLOGS,
 		name: "blogs",
-		component: () => import(/* webpackChunkName: "about" */ "../views/blogs/blogs.vue"),
-		meta:{
-			requiresAuth:true
-		}
+		component: BlogsView,
+		meta: {
+			requiresAuth: true,
+		},
 	},
 	{
-		path: "/contactUs",
+		path: CONTACT_US,
 		name: "ContactUs",
-		component: () => import("../views/contactUs/contactUs.vue"),
+		component: ContactUsView,
 	},
 	{
-		path: "/login",
+		path: LOGIN,
 		name: "Login",
-		component: () => import("../views/auth/Login.vue"),
+		component: LoginVue,
 	},
-	
 	{
-		path: "/:catchAll(.*)",
+		path: SHOPPING_CART,
+		name: "ShoppingCart",
+		component: ShoppingCartView,
+	},
+	{
+		path: NOT_FOUND,
 		name: "NotFound",
-		component: NotFound
+		component: NotFound,
 	},
 ];
 
@@ -40,20 +43,20 @@ const router = createRouter({
 	routes,
 });
 
-
 router.beforeEach((to, from, next) => {
 	if (to.meta.requiresAuth) {
-	  const token = localStorage.getItem('token');
-	  if (token) {
-		// User is authenticated, proceed to the route
-		next();
-	  } else {
-		// User is not authenticated, redirect to login
-		next('/login');
-	  }
+		const token = localStorage.getItem("token");
+		if (token) {
+			// User is authenticated, proceed to the route
+			next();
+		} else {
+			// User is not authenticated, redirect to login
+			next(LOGIN);
+		}
 	} else {
-	  // Non-protected route, allow access
-	  next();
+		// Non-protected route, allow access
+		next();
 	}
-  });
+});
+
 export default router;
