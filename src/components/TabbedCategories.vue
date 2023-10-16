@@ -18,7 +18,7 @@
 				<BaseTabs @handle-category-click="handleCategoryClick" />
 				<div class="flex flex-wrap gap-3">
 					<div v-for="product in filteredProducts" :key="product.id" class="w-width-24 mt-5">
-						<ProductListItem :product="product" />
+						<ProductListItem :product="product" @handle-add-items-to-cart="addItemsToCart" />
 					</div>
 				</div>
 			</div>
@@ -32,14 +32,20 @@ import ProductListItem from "./product/ProductListItem.vue";
 import BaseListLoader from "./BaseListLoader.vue";
 import { storeToRefs } from "pinia";
 import BaseTabs from "./BaseTabs.vue";
+import { useAuthStore } from "@/store/AuthStore";
+import { useCartStore } from "@/store/CartStore";
+import { date } from "yup";
 
 export default {
 	components: { ProductListItem, BaseListLoader, BaseTabs },
 	setup() {
 		const productStore = useProductStore();
+		const cartStore = useCartStore();
+		const authStore = useAuthStore();
 		const { productByCategory, products, loading, error } = storeToRefs(productStore)
 		const { getCategorySpecificProducts, getProducts } = productStore;
-		return { productByCategory, products, loading, error, getCategorySpecificProducts, getProducts }
+		const { addCartItems } = cartStore;
+		return { cartStore, authStore, productByCategory, products, loading, error, getCategorySpecificProducts, getProducts, addCartItems }
 	},
 	data() {
 		return {
@@ -55,7 +61,9 @@ export default {
 				if (newCategory === "All") {
 					this.getProducts();
 				} else {
-					this.getProdByCategory(newCategory);
+					// this.getProdByCategory(newCategory);
+					console.log(this.selectCategory)
+					this.products.filter((product) => product.category === this.selectCategory);
 				}
 			},
 		}
@@ -65,8 +73,8 @@ export default {
 			if (this.selectCategory === "All") {
 				return this.products;
 			} else {
-				// return this.products.filter((product) => product.category === this.selectedCategory);
-				return this.productByCategory
+				return this.products.filter((product) => product.category === this.selectCategory);
+				// return this.productByCategory
 			}
 		},
 		allCategoriesList() {
@@ -74,6 +82,11 @@ export default {
 		},
 		isProductsEmpty() {
 			return (this.products && this.products.length === 0) || this.products === undefined;
+		},
+		formattedDate() {
+			const currentDate = new Date();
+			// Format the date as "YYYY-MM-DD"
+			return currentDate.toISOString().split('T')[0];
 		}
 	},
 	methods: {
@@ -82,6 +95,21 @@ export default {
 		},
 		getProdByCategory(category) {
 			this.getCategorySpecificProducts(category)
+		},
+		async addItemsToCart(id) {
+			const productData = {
+				productId: id,
+				quantity: 1
+			}
+			const currentDate = this.formattedDate
+			const userId = this.authStore.user.id
+			// const cartItem = {
+			// 	userId: userId,
+			// 	date: currentDate,
+			// 	product: productData
+			// }
+			// console.log('product', cartItem)
+			this.cartStore.addCartItems(userId, productData, currentDate)
 		}
 	}
 };
