@@ -21,11 +21,16 @@ module.exports = {
 			},
 			colors: {
 				primary: "#7fad39",
-				gray:"#f5f5f5"
+				secondary:"#219ebc"
 			},
 			backgroundImage: {
 				banner: "url('/src/assets/bg/banner.jpg')",
 			},
+			lineHeight:{
+				"11":"2.75rem",
+				"12":"3rem",
+				"13":"3.25rem",
+			}
 		},
 	},
 	plugins: [],
