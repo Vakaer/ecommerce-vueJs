@@ -23,7 +23,7 @@ AppInstance.interceptors.request.use(
 
 AppInstance.interceptors.response.use(
 	(response) => {
-		console.log("Response of axios : ", response);
+		// console.log("Response of axios : ", response);
 		return response;
 	},
 	(error) => {
