@@ -4,7 +4,6 @@
       <TheMainHeader />
       <dialog></dialog>
       <slot></slot>
-      <TheFooter />
     </div>
   </template>
     
