@@ -14,7 +14,7 @@ export const useCategoryStore = defineStore("categoryStore", {
 			this.loading = true;
 			try {
 				const response = await getAllCategories();
-				console.log("response", response);
+				// console.log("response", response);
 				if (response) {
 					this.categories = response.data;
 					this.error = null; // Reset the error if the request was successful
