@@ -1,15 +1,15 @@
 <template>
   <AuthLayout>
 
-    <div class="h-screen">
-      <div class="bg-white lg:w-6/12 md:7/12 w-8/12 shadow-3xl mx-auto">
+    <div class="flex mt-40 items-center justify-center">
+      <div class="bg-gray lg:w-6/12 md:7/12 w-8/12 shadow-3xl mx-auto bg-secondary">
         <form @submit.prevent="login" class="p-12 md:p-24">
           <label>Username</label>
-          <input type="text" class="bg-gray-200 pl-12 py-2 md:py-4 focus:outline-none w-full" v-model="username" />
+          <input type="text" class="bg-gray-200 pl-2 py-2 md:py-4 focus:outline-none w-full" v-model="username" />
           <label>Password</label>
-          <input type="password" class="bg-gray-200 pl-12 py-2 md:py-4 focus:outline-none w-full" v-model="password" />
+          <input type="password" class="bg-gray-200 pl-2 py-2 md:py-4 focus:outline-none w-full" v-model="password" />
           <button type="submit"
-            class="bg-gradient-to-b from-gray-700 to-gray-900 font-medium p-2 md:p-4 text-white uppercase w-full mt-5">Login</button>
+            class="bg-gradient-to-b text-white bg-primary font-medium p-2 md:p-4  uppercase w-full mt-5">Login</button>
         </form>
       </div>
 
@@ -20,10 +20,15 @@
 <script >
 import AuthLayout from '@/Layouts/AuthLayout.vue';
 import { useAuthStore } from '@/store/AuthStore';
+import { useUserStore } from '@/store/UserStore';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
+
 export default {
   setup() {
     const authStore = useAuthStore();
-    return { authStore };
+    const userStore = useUserStore();
+    return { authStore, userStore };
   },
   data() {
     return {
@@ -34,7 +39,11 @@ export default {
   methods: {
     async login() {
       await this.authStore.login(this.username, this.password);
-      this.$router.push({ path: '/' });
+      this.$router.push({ path: '/', replace: true });
+      toast.success(`Welcome ${this.authStore.user.username}`, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 10000
+      });
     },
   },
   components: { AuthLayout }
