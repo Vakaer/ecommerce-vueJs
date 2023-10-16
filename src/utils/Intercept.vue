@@ -18,7 +18,9 @@
 
           </div>
         </div>
-        <HomeBanner />
+        <div v-if="isHome">
+          <HomeBanner />
+        </div>
       </div>
     </div>
     <dialog></dialog>
@@ -35,6 +37,8 @@ import TheTopHeader from "@/components/TheTopHeader.vue";
 import SearchBar from "@/components/SearchBar.vue";
 import HomeBanner from "@/components/HomeBanner.vue";
 import SideDropDownMenu from "@/components/SideDropDownMenu.vue";
+import { useRoute } from 'vue-router';
+
 export default {
   name: 'Intercept',
   components: {
@@ -45,14 +49,20 @@ export default {
     HomeBanner,
     SideDropDownMenu,
   },
-  data() {
+  setup() {
+    const router = useRoute();
     return {
-      msg: "",
-      type: "",
-      modal: false,
-      loading: false,
-    };
+      router
+    }
   },
+  computed: {
+    path() {
+      return this.router.path
+    },
+    isHome() {
+      return this.router.path === "/"
+    }
+  }
 };
 </script>
 
