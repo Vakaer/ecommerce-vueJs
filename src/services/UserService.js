@@ -1,4 +1,4 @@
-import ApiUtil from "@/utils/ApiUtils";
+import {ApiUtil} from "@/utils/ApiUtils";
 
 // Get all users
 export async function getAllUsers() {
