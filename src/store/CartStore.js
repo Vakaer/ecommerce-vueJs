@@ -1,5 +1,5 @@
 import { getAllCategories } from "@/services/CategoryService";
-import { addProductToCart, getCartItemByUserId } from "@/services/CartService";
+import { addProductToCart, deleteCartItem, getCartItemByUserId } from "@/services/CartService";
 import { defineStore } from "pinia";
 
 export const useCartStore = defineStore("cartStore", {
@@ -49,8 +49,20 @@ export const useCartStore = defineStore("cartStore", {
 				this.loading = false;
 			}
 		},
+		async removeCartItem(id) {
+			try {
+				const response = await deleteCartItem(id);
+				if (response) {
+					this.error = null; // Reset the error if the request was successful
+				} else {
+					this.error = "Server returned a non-200 status code"; // Handle non-200 status codes
+				}
+			} catch (error) {
+				this.error = "An error occurred while deleting product"; // Handle network or other errors
+			} finally {
+				this.loading = false;
+			}
+		},
 	},
-	getters:{
-		
-	}
+	getters: {},
 });
