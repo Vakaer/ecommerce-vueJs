@@ -15,7 +15,6 @@ export const useProductStore = defineStore("productStore", {
 			this.loading = true;
 			try {
 				const response = await getAllProducts();
-				console.log("response", response);
 				if (response) {
 					this.products = response;
 					this.error = null; // Reset the error if the request was successful
@@ -50,12 +49,12 @@ export const useProductStore = defineStore("productStore", {
 			}
 		},
 		async getProductById(id) {
+			debugger;
 			this.loading = true;
 			try {
 				const response = await getProductsById(id);
 				if (response) {
-					// Update a property to store the product details
-					this.productDetails = response.data;
+					this.productDetails = [...this.productDetails, response];
 					this.error = null; // Reset the error if the request was successful
 				} else {
 					this.error = "Server returned a non-200 status code"; // Handle non-200 status codes
