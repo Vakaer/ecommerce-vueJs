@@ -19,9 +19,11 @@ import {
 	faPhone,
 	faHamburger,
 	faCaretDown,
+	faPlus,
+	faMinus
 } from "@fortawesome/free-solid-svg-icons";
 /* add icons to the library */
-library.add(faCartShopping, faHeart, faPhone, faHamburger, faCaretDown);
+library.add(faCartShopping, faHeart, faPhone, faHamburger, faCaretDown, faPlus, faMinus);
 
 const app = createApp(App);
 app.use(createPinia());
