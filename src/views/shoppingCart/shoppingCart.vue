@@ -1,6 +1,6 @@
 <template>
     <HomeLayout>
-        <div class="h-screen">
+        <div>
             <div class="w-full py-6 font-bold mt-4 flex items-center justify-center bg-slate-200 text-f44">
                 <h1>Shopping Cart</h1>
             </div>
